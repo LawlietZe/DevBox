@@ -3,14 +3,23 @@ import styled from 'styled-components'
 import Navbar from './navbar'
 
 const LayoutWrapper = styled.div`
-    display: grid;
+  background: #F7ECDE;
 `;
+
+const Container = styled.div`
+    margin: 0 auto;
+    max-width: 1400px;
+    height: 800px;
+`;
+
 
 export default function Layout({ children }) {
   return (
     <LayoutWrapper>
       <Navbar />
-      <main>{children}</main>
+      <Container>
+        <main>{children}</main>
+      </Container>
       {/* <Footer /> */}
     </LayoutWrapper>
   )
