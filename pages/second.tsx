@@ -1,11 +1,12 @@
-import type { NextPage } from 'next'
+import type { NextPage } from 'next';
+import Box from '../components/Box';
 
 const Second: NextPage = () => {
   return (
     <div>
-        {'halo second'}
+      <Box>{'halo second'}</Box>
     </div>
-  )
-}
+  );
+};
 
-export default Second
+export default Second;
