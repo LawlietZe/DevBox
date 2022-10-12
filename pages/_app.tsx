@@ -13,10 +13,11 @@ import lightTheme from '../styles/theme-day';
 import darkTheme from '../styles/theme-dark';
 import { useDarkMode } from '../hooks/useDarkModel';
 import { appContext } from '../context/appcontext';
+import { appWithTranslation } from 'next-i18next';
 
 const queryClient = new QueryClient();
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   // const queryClient = useQueryClient();
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
@@ -32,4 +33,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </appContext.Provider>
     </QueryClientProvider>
   );
-}
+};
+
+export default appWithTranslation(MyApp);

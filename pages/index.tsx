@@ -2,9 +2,12 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const Home: NextPage = (props) => {
   console.log(props);
+  const { t } = useTranslation('common');
   return (
     <div>
       <Head>
@@ -14,20 +17,29 @@ const Home: NextPage = (props) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div>{'Welcome to my world'}</div>
+      <div>{t('change-locale')}</div>
       <div>{props.data.title}</div>
     </div>
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
+  const { req } = ctx;
   // Fetch data from external API
   const res = await fetch(
     `https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty`,
   );
   const data = await res.json();
 
+  const locale = req.cookies['lang'] || 'en';
+
   // Pass data to the page via props
-  return { props: { data } };
+  return {
+    props: {
+      data,
+      ...(await serverSideTranslations(locale, ['common', 'footer'])),
+    },
+  };
 }
 
 export default Home;
